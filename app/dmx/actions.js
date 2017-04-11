@@ -1,4 +1,4 @@
-import { SET_DMX_VALUE, SET_POSITION } from './constants';
+import { SET_DMX_VALUE, SET_DMX_VALUES, SET_POSITION } from './constants';
 
 export const setPosition = (device, position) => {
   return {
@@ -18,5 +18,12 @@ export const setDMXValue = (universe, channel, value) => {
       channel,
       value,
     }
+  };
+};
+
+export const setDMXValues = (values) => {
+  return {
+    type: SET_DMX_VALUES,
+    payload: values,
   };
 };

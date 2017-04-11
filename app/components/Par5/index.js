@@ -39,7 +39,16 @@ function Par5(props) {
 
   return (
     <ParWrapper>
-      <ParLed data-tip data-for={props.device.id} size={2} red={red} green={green} blue={blue} dimmer={dimmer} strobe={strobe}/>
+      <ParLed
+        data-tip
+        data-for={props.device.id}
+        size={2}
+        red={red}
+        green={green}
+        blue={blue}
+        dimmer={dimmer}
+        strobe={strobe}
+      />
 
       <Tooltip id={props.device.id} type="light" place="right" effect="float">
         <DeviceTooltip device={props.device} deviceType={props.deviceType}/>

@@ -1,5 +1,5 @@
 import { START_RANDOM, STOP_RANDOM } from './constants';
-import { setDMXValue } from '../actions';
+import { setDMXValues } from '../actions';
 let interval;
 
 export const middleware = store => next => action => {
@@ -7,14 +7,20 @@ export const middleware = store => next => action => {
     case START_RANDOM:
       let channel = 0;
       interval = setInterval(() => {
-        console.log('asdf');
-        store.dispatch(setDMXValue(action.payload.universeId, (channel + 0) % 255, 255));
-        store.dispatch(setDMXValue(action.payload.universeId, (channel + 1) % 255, 191));
-        store.dispatch(setDMXValue(action.payload.universeId, (channel + 2) % 255, 127));
-        store.dispatch(setDMXValue(action.payload.universeId, (channel + 3) % 255, 63));
-        store.dispatch(setDMXValue(action.payload.universeId, (channel + 4) % 255, 0));
+        const values = [];
+
+        for (let i = 0; i < 10; i++) {
+          values.push({
+            universe: action.payload.universeId,
+            channel: getRandomInt(0, 511),
+            value: getRandomInt(0, 255),
+          });
+        }
+
+        store.dispatch(setDMXValues(values));
+
         channel++;
-      }, 50);
+      }, 10);
 
       break;
 
@@ -30,3 +36,12 @@ export const middleware = store => next => action => {
       return next(action);
   }
 };
+
+
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive)
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+const getRandomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
