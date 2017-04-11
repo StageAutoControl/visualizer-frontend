@@ -12,18 +12,23 @@
  */
 
 import React from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
-
   static propTypes = {
     children: React.PropTypes.node,
   };
 
   render() {
     return (
-      <div>
+      <Wrapper>
         {React.Children.toArray(this.props.children)}
-      </div>
+      </Wrapper>
     );
   }
 }
