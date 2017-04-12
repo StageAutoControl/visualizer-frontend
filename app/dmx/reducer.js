@@ -12,8 +12,9 @@ const initialState = fromJS({
 
 const merge = (state, position) => {
   return state.setIn(['universes', position.universe, position.channel], position.value);
-}
-export default function reducer(state = initialState, action) {
+};
+
+export function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_POSITION:
       state = state.setIn(['positions', action.payload.device.id], action.payload.position);
@@ -33,3 +34,5 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
+
+export default reducer;

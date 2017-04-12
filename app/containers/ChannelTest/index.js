@@ -33,7 +33,7 @@ const ChannelValue = styled.div`
 
 const universeId = -1;
 
-const leftpad = (str) => ('000'+str).substring((str + "").length);
+const leftpad = (str) => ('000' + str).substring((str + "").length);
 
 export class ChannelTest extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -71,12 +71,10 @@ ChannelTest.propTypes = {
 };
 
 
-function mapDispatchToProps(dispatch) {
-  return {
-    startRandom: (universeId) => dispatch(startRandom(universeId)),
-    stopRandom: () => dispatch(stopRandom()),
-  };
-}
+const mapDispatchToProps = (dispatch) => ({
+  startRandom: (universeId) => dispatch(startRandom(universeId)),
+  stopRandom: () => dispatch(stopRandom()),
+})
 
 const mapStateToProps = (state, props) => ({
   universe: getUniverse(state.getIn(['dmx', 'universes']).toJS(), universeId),

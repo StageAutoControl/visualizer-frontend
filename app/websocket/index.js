@@ -1,5 +1,4 @@
-import middleware from './middleware';
-
-export {
-  middleware,
-};
+export * from './constants';
+export * from './actions';
+export * from './middleware';
+export * from './reducer';

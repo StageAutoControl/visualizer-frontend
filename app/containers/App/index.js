@@ -13,22 +13,58 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import {connect as wsConnect} from '../../websocket';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 `;
 
-export default class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+const SocketInfo = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 50px;
+  min-width: 400px;
+  width: auto;
+  border: 1px solid white;
+`;
+
+export class App extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    errorMessage: React.PropTypes.string,
+    state: React.PropTypes.string.isRequired,
+    url: React.PropTypes.string,
+    connect: React.PropTypes.func.isRequired,
     children: React.PropTypes.node,
   };
+
+  componentDidMount() {
+    this.props.connect();
+  }
 
   render() {
     return (
       <Wrapper>
+        <SocketInfo>
+          State: {this.props.state} @ {this.props.url || '-'}<br />
+          Last Error: {this.props.errorMessage}
+        </SocketInfo>
         {React.Children.toArray(this.props.children)}
       </Wrapper>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  connect: () => dispatch(wsConnect('ws://localhost:8000')),
+});
+
+const mapStateToProps = (state, props) => ({
+  state: state.getIn(['socket', 'state']),
+  url: state.getIn(['socket', 'url']),
+  errorMessage: state.getIn(['socket', 'errorMessage']),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
