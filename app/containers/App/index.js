@@ -58,7 +58,7 @@ export class App extends React.PureComponent { // eslint-disable-line react/pref
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  connect: () => dispatch(wsConnect('ws://localhost:8000')),
+  connect: () => dispatch(wsConnect('ws://localhost:8080/commands')),
 });
 
 const mapStateToProps = (state, props) => ({

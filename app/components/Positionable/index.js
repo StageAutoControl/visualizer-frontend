@@ -17,15 +17,32 @@ const Wrapper = styled.div`
   left: ${props => props.position.x}px;
 `;
 
+const grid = 20;
+
+const fixPosition = (p) => {
+  const diff = p % grid;
+
+  if (diff > grid / 2) {
+    return p + (grid - diff);
+  }
+
+  return p - diff;
+};
+
 class Positionable extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <Draggable
-        grid={[25, 25]}
-        position={{x: 0, y: 0}}
+        grid={[grid, grid]}
+        position={{ x: 0, y: 0 }}
         onStop={(e, { x, y }) => {
+
           x += this.props.position.x;
           y += this.props.position.y;
+
+          x = fixPosition(x);
+          y = fixPosition(y);
+
           this.props.onPositionChange({ x, y });
         }}
       >

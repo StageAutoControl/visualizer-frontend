@@ -34,6 +34,22 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/all',
+      name: 'allUniverses',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/AllUniverses'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([component]) => {
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '/channel-test',
       name: 'channelTest',
       getComponent(nextState, cb) {

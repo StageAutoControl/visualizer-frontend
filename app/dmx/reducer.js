@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
-import { SET_DMX_VALUE, SET_DMX_VALUES, SET_POSITION } from './constants';
-import { loadPositions, savePositions } from './local';
+import { SET_DMX_VALUE, SET_DMX_VALUES, SET_POSITION, TURN_DEVICE } from './constants';
+import { loadPositions, loadTurnedDevices, savePositions, saveTurnedDevices } from './local';
 import { loadDevices, loadDeviceTypes } from './data';
 
 const initialState = fromJS({
@@ -8,7 +8,13 @@ const initialState = fromJS({
   deviceTypes: loadDeviceTypes(),
   positions: loadPositions(),
   universes: { 1: {} },
+  turnedDevices: loadTurnedDevices(),
 });
+
+console.log(initialState);
+
+console.log(`Loaded ${initialState.get('devices').size} Devices`);
+console.log(`Loaded ${initialState.get('deviceTypes').size} DeviceTypes`);
 
 const merge = (state, position) => {
   return state.setIn(['universes', position.universe, position.channel], position.value);
@@ -25,11 +31,18 @@ export function reducer(state = initialState, action) {
       return merge(state, action.payload);
 
     case SET_DMX_VALUES:
-      for (const pos of action.payload) {
-        state = merge(state, pos);
+      for (const val of action.payload) {
+        state = merge(state, val);
       }
 
       return state;
+
+    case TURN_DEVICE:
+      const oldTurned = state.getIn(['turnedDevices', action.payload.deviceId]) || false;
+      state = state.setIn(['turnedDevices', action.payload.deviceId], !oldTurned);
+      saveTurnedDevices(state.get('turnedDevices').toJS());
+      return state;
+
     default:
       return state;
   }

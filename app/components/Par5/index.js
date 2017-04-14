@@ -51,7 +51,7 @@ function Par5(props) {
       />
 
       <Tooltip id={props.device.id} type="light" place="right" effect="float">
-        <DeviceTooltip device={props.device} deviceType={props.deviceType}/>
+        <DeviceTooltip device={props.device} deviceType={props.deviceType} state={{dimmer, strobe, leds: [{position: 0, red, green, blue}]}}/>
       </Tooltip>
     </ParWrapper>
   );

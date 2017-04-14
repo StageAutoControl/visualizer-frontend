@@ -1,4 +1,4 @@
-import { POSITIONS_LS_KEY } from './constants';
+import { POSITIONS_LS_KEY, TURNED_DEVICEC_LS_KEY } from './constants';
 import { Position } from './device';
 
 export const getValue = ((storage, key) => {
@@ -23,4 +23,12 @@ export const loadPositions = () => {
 
 export const savePositions = (positions) => {
   setValue(window.localStorage, POSITIONS_LS_KEY, positions);
+};
+
+export const loadTurnedDevices = () => {
+  return getValue(window.localStorage, TURNED_DEVICEC_LS_KEY);
+};
+
+export const saveTurnedDevices = (turnedDevices) => {
+  setValue(window.localStorage, TURNED_DEVICEC_LS_KEY, turnedDevices);
 };

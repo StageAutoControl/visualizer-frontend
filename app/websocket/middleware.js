@@ -1,5 +1,7 @@
 import * as actions from './actions';
 import { CONNECT, DISCONNECT } from './constants';
+import {DMXCommands} from './transport';
+import { setDMXValues } from '../dmx/actions';
 
 export const middleware = (function () {
   let socket = null;
@@ -18,7 +20,14 @@ export const middleware = (function () {
   };
 
   const onMessage = (ws, store) => evt => {
-    store.dispatch(actions.messageReceived(evt.data));
+    // store.dispatch(actions.messageReceived(evt.data));
+    // console.log(evt);
+
+    const res = new Uint8Array(evt.data);
+    const cmds = DMXCommands.decode(res);
+    const values = cmds.toObject().commands || [];
+
+    store.dispatch(setDMXValues(values))
   };
 
   return store => next => action => {
@@ -32,6 +41,7 @@ export const middleware = (function () {
         store.dispatch(actions.connecting());
 
         socket = new WebSocket(action.payload.url);
+        socket.binaryType = 'arraybuffer';
         socket.onmessage = onMessage(socket, store);
         socket.onclose = onClose(socket, store);
         socket.onopen = onOpen(socket, store);

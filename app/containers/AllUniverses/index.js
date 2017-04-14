@@ -1,5 +1,5 @@
 /*
- * Universe
+ * AllUniverses
  *
  * NOTE: while this component should technically be a stateless functional
  * component (SFC), hot reloading does not currently support SFCs. If hot
@@ -12,10 +12,9 @@ import { connect } from 'react-redux';
 import Device from '../Device';
 import { UniverseWrapper } from '../../components/UniverseWrapper';
 
-class Universe extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+class AllUniverses extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     devices: React.PropTypes.array.isRequired,
-    universeId: React.PropTypes.number.isRequired,
   };
 
   render() {
@@ -31,14 +30,9 @@ class Universe extends React.PureComponent { // eslint-disable-line react/prefer
 
 const mapDispatchToProps = dispatch => ({});
 
-const mapStateToProps = (state, route) => {
-  const universeId = parseInt(route.params.universeId, 10) || 1;
-
-  return ({
-    devices: state.getIn(['dmx', 'devices']).toJS().filter(d => d.universe === universeId),
-    universeId: universeId,
-  })
-};
+const mapStateToProps = (state, route) => ({
+  devices: state.getIn(['dmx', 'devices']).toJS(),
+});
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(Universe);
+export default connect(mapStateToProps, mapDispatchToProps)(AllUniverses);
