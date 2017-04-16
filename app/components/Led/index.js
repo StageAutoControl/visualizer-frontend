@@ -13,7 +13,7 @@ const Led = styled.div`
   display: inline-block;
   width: ${props => props.size * 20}px;
   height: ${props => props.size * 20}px;
-  border-radius: ${props => (props.size -1) * 20}px;
+  border-radius: ${props => (props.size * 20) / 2}px;
   ${(props) => {
   if (props.strobe > 0) {
     return css`
