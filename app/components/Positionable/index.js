@@ -30,6 +30,13 @@ const fixPosition = (p) => {
 };
 
 class Positionable extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  constructor(params) {
+    super(params);
+
+    this.state = {
+      active: false,
+    }
+  }
   render() {
     return (
       <Draggable
@@ -46,7 +53,12 @@ class Positionable extends React.PureComponent { // eslint-disable-line react/pr
           this.props.onPositionChange({ x, y });
         }}
       >
-        <Wrapper position={this.props.position}>
+        <Wrapper
+          onMouseEnter={() => this.setState({active: true})}
+          onMouseLeave={() => this.setState({active: false})}
+          position={this.props.position}
+          className={{'device-tooltip': this.state.active}}
+        >
           {React.Children.toArray(this.props.children)}
         </Wrapper>
       </Draggable>
