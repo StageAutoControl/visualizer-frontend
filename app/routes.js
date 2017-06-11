@@ -34,7 +34,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/all',
+      path: '/',
       name: 'allUniverses',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

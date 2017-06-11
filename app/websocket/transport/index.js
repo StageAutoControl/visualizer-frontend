@@ -1,8 +1,14 @@
-import { dmx } from './dmx';
-const { DMXCommand, DMXCommands } = dmx;
+import { transport } from './transport';
+const {
+  DMXCommand,
+  MIDICommand,
+  BarChange,
+  Command,
+} = transport;
 
 export {
-  dmx,
   DMXCommand,
-  DMXCommands,
+  MIDICommand,
+  BarChange,
+  Command,
 };

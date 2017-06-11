@@ -1,6 +1,6 @@
 import * as actions from './actions';
 import { CONNECT, DISCONNECT } from './constants';
-import {DMXCommands} from './transport';
+import { Command } from './transport';
 import { setDMXValues } from '../dmx/actions';
 
 export const middleware = (function () {
@@ -24,8 +24,8 @@ export const middleware = (function () {
     // console.log(evt);
 
     const res = new Uint8Array(evt.data);
-    const cmds = DMXCommands.decode(res);
-    const values = cmds.toObject().commands || [];
+    const cmds = Command.decode(res);
+    const values = cmds.toObject().dmxCommands || [];
 
     store.dispatch(setDMXValues(values))
   };
@@ -90,7 +90,7 @@ function mapCode(event) {
     return "An endpoint is terminating the connection because it has received a message that is too big for it to process.";
   } else if (event.code === 1010) {
     // Note that this status code is not used by the server, because it can fail the WebSocket handshake instead.
-    return "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't returnhem in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " + event.reason;
+    return "An endpoint (client) is terminating the connection because it has expected the server to negotiate one or more extension, but the server didn't return them in the response message of the WebSocket handshake. <br /> Specifically, the extensions that are needed are: " + event.reason;
   } else if (event.code === 1011) {
     return "A server is terminating the connection because it encountered an unexpected condition that prevented it from fulfilling the request.";
   } else if (event.code === 1015) {

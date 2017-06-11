@@ -6,7 +6,6 @@ export const loadDevices = () => {
     .map(d => new Device(d));
 };
 
-
 export const loadDeviceTypes = () => {
   return Array
     .from(require('./data/dmx_device_types.json'))
