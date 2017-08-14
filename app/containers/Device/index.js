@@ -56,7 +56,6 @@ export class Device extends React.PureComponent { // eslint-disable-line react/p
 
     return (
       <Positionable
-        // style={{zIndex: }}
         key={this.props.device.id}
         position={pos || defaultPosition}
         onPositionChange={(p) => this.props.onMove(this.props.device, p)}
