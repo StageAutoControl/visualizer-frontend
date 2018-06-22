@@ -1,6 +1,5 @@
 import * as actions from './actions';
 import { CONNECT, DISCONNECT } from './constants';
-import { Command } from './transport';
 import { setDMXValues } from '../dmx/actions';
 
 export const middleware = (function () {
@@ -21,13 +20,16 @@ export const middleware = (function () {
 
   const onMessage = (ws, store) => evt => {
     // store.dispatch(actions.messageReceived(evt.data));
-    // console.log(evt);
+    const data = evt.data.toString();
+    const value = JSON.parse(data);
 
-    const res = new Uint8Array(evt.data);
-    const cmds = Command.decode(res);
-    const values = cmds.toObject().dmxCommands || [];
+    if (value === null) {
+      return;
+    }
 
-    store.dispatch(setDMXValues(values))
+    console.log(value);
+
+    store.dispatch(setDMXValues(value.dmxCommands))
   };
 
   return store => next => action => {

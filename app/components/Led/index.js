@@ -14,7 +14,7 @@ const rgbwa = (props) => {
     props.red = props.green = props.blue = props.white;
   }
 
-  return `rgba(${props => props.red}, ${props => props.green}, ${props => props.blue}, ${props => aVal(props.dimmer)})`;
+  return css`rgba(${props => props.red}, ${props => props.green}, ${props => props.blue}, ${props => aVal(props.dimmer)})`;
 };
 
 const Led = styled.div`
@@ -22,13 +22,13 @@ const Led = styled.div`
   width: ${props => props.size * 20}px;
   height: ${props => props.size * 20}px;
   border-radius: ${props => (props.size * 20) / 2}px;
-  ${(props) => css`background-color: ${rgbwa(props)};`}
+  background-color: ${props => rgbwa(props)};
   line-height: 1;
 `;
 
 Led.propTypes = {
   size: React.PropTypes.number,
-  dimmer: React.PropTypes.number.isRequired,
+  dimmer: React.PropTypes.number,
   strobe: React.PropTypes.number,
   red: React.PropTypes.number.isRequired,
   green: React.PropTypes.number.isRequired,
@@ -38,6 +38,9 @@ Led.propTypes = {
 
 Led.defaultProps = {
   size: 1,
+  dimmer: 0,
+  strobe: 0,
+  white: 0,
 };
 
 export default Led;
