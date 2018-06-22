@@ -10,6 +10,7 @@ import { getDeviceType, getUniverse, Position, setPosition, turnDevice } from '.
 import Par5 from '../../components/Par5';
 import Positionable from '../../components/Positionable';
 import LedBar67 from '../../components/LedBar67';
+import LedBar64 from '../../components/LedBar64';
 
 const defaultPosition = new Position({ x: 0, y: 0 });
 
@@ -33,6 +34,19 @@ export class Device extends React.PureComponent { // eslint-disable-line react/p
     if (deviceType.key === "LEDBar67") {
       return (
         <LedBar67
+          key={device.id}
+          device={device}
+          deviceType={deviceType}
+          universe={universe}
+          turn={this.props.turn.bind(null, device.id)}
+          turned={this.props.isTurned}
+        />
+      )
+    }
+
+    if (deviceType.key === "LEDBar64") {
+      return (
+        <LedBar64
           key={device.id}
           device={device}
           deviceType={deviceType}

@@ -9,22 +9,20 @@ import styled, {css} from 'styled-components';
 
 const aVal = (value) => 1 - 1 / (255 / value);
 
+const rgbwa = (props) => {
+  if (props.white > 0) {
+    props.red = props.green = props.blue = props.white;
+  }
+
+  return `rgba(${props => props.red}, ${props => props.green}, ${props => props.blue}, ${props => aVal(props.dimmer)})`;
+};
+
 const Led = styled.div`
   display: inline-block;
   width: ${props => props.size * 20}px;
   height: ${props => props.size * 20}px;
   border-radius: ${props => (props.size * 20) / 2}px;
-  ${(props) => {
-  if (props.strobe > 0) {
-    return css`
-			background-color: rgba(255, 255, 255, ${props => aVal(props.strobe)});
-		`;
-  } else {
-    return css`
-      background-color: rgba(${props => props.red}, ${props => props.green}, ${props => props.blue}, ${props => aVal(props.dimmer)});
-    `;
-  }
-}}
+  ${(props) => css`background-color: ${rgbwa(props)};`}
   line-height: 1;
 `;
 
