@@ -27,7 +27,7 @@ export const middleware = (function () {
       return;
     }
 
-    console.log(value);
+    console.log(value.frame, value.dmxCommands);
 
     store.dispatch(setDMXValues(value.dmxCommands))
   };
