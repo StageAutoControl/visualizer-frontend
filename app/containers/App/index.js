@@ -58,7 +58,16 @@ export class App extends React.PureComponent { // eslint-disable-line react/pref
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  connect: () => dispatch(wsConnect('ws://localhost:3001/commands')),
+  connect: () => {
+    let url;
+    if (process.env.NODE_ENV === 'production') {
+      url = 'ws://' + window.location.host + '/visualizer-socket';
+      console.log(`Using websocket url ${url}`);
+    } else {
+      url = 'ws://localhost:8080/visualizer-socket';
+    }
+    dispatch(wsConnect(url));
+  },
 });
 
 const mapStateToProps = (state, props) => ({
